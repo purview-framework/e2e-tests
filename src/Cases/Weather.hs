@@ -6,7 +6,12 @@ import Prelude hiding (div)
 
 import Network.HTTP.Req
 import Data.Aeson
+import Data.Aeson.Types
 import Purview
+import Cases.BasicsAndAttributes (nameAttr)
+
+
+typeAttr = Attribute . Generic "type"
 
 -----------
 -- Model --
@@ -48,13 +53,20 @@ view state = div
   , forecastView state
   ]
 
+latLonForm :: Purview (Maybe String) m
+latLonForm = onSubmit id $ form
+  [ nameAttr "latitude" $ input []
+  , nameAttr "longitude" $ input []
+  , typeAttr "submit" $ button [ text "Get Weather" ]
+  ]
+
 -------------
 -- Reducer --
 -------------
 
 data Actions
-  = StartWeatherRequest String String
-  | WeatherRequest String String
+  = LoadWeather String String
+  | RequestWeather (Maybe String)
   deriving (Show, Eq)
 
 data State
@@ -64,26 +76,39 @@ data State
   deriving (Show, Eq)
 
 weatherReducer :: Actions -> State -> IO (State -> State, [DirectedEvent parentAction Actions])
-weatherReducer (StartWeatherRequest lat lon) state =
-  pure (const $ Loading, [Self $ WeatherRequest lat lon])
-weatherReducer (WeatherRequest lat lon) state = do
-  weather <- fetchWeather
-  pure (const $ Loaded weather, [])
+weatherReducer (RequestWeather raw) state =
+  let
+    lat = ""
+    lon = ""
+  in
+    pure (const $ Loading, [Self $ LoadWeather lat lon])
+weatherReducer (LoadWeather lat lon) state = do
+  forecastLocation <- fetchForecast (lat, lon)
+
+  case forecastLocation of
+
+    Just forecastLocation' -> do
+      weather <- fetchWeather forecastLocation'
+      pure (const $ Loaded weather, [])
+
+    Nothing ->
+      pure (id, [])
 
 weatherHandler :: (State -> Purview Actions IO) -> Purview parentEvent IO
 weatherHandler = effectHandler
-  [Self $ StartWeatherRequest "" ""] -- initial events
-  Init                               -- initial state
-  weatherReducer                     -- event reducer
+  []              -- initial events
+  Init            -- initial state
+  weatherReducer  -- event reducer
 
 ---------
 -- API --
 ---------
 
-fetchWeather :: IO Forecast
-fetchWeather = runReq defaultHttpConfig $ do
-  let userAgent = header "User-Agent" "(purview.org, bontaq@gmail.com)"
+userAgent :: Option scheme
+userAgent = header "User-Agent" "(purview.org, bontaq@gmail.com)"
 
+fetchWeather :: String -> IO Forecast
+fetchWeather forecastLocation = runReq defaultHttpConfig $ do
   res <- req GET
     (https "api.weather.gov" /: "gridpoints" /: "TOP" /: "31,80" /: "forecast")
     NoReqBody
@@ -91,6 +116,22 @@ fetchWeather = runReq defaultHttpConfig $ do
     userAgent
 
   pure (responseBody res :: Forecast)
+
+fetchForecast :: (String, String) -> IO (Maybe String)
+fetchForecast (lat, lon) = runReq defaultHttpConfig $ do
+  res <- req GET
+    (https "api.weather.gov" /: "points" /: (lat <> "," <> lon))
+    NoReqBody
+    jsonResponse
+    userAgent
+
+  let
+    response = responseBody res :: Object
+    forecast = parseMaybe
+      (\item -> item .: "properties" >>= (.: "forecast")) response :: Maybe String
+
+  pure forecast
+
 
 ------------------
 -- All Together --

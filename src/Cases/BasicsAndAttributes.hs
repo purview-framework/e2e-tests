@@ -6,9 +6,10 @@ import Purview
 
 nameAttr = Attribute . Generic "name"
 typeAttr = Attribute . Generic "type"
+idAttr   = Attribute . Generic "id"
 
 render = div
-  [ id' "identifierAttr"      $ div [ text "id test" ]
+  [ idAttr "identifierAttr"   $ div [ text "id test" ]
   , nameAttr "namedAttr"      $ div [ text "name test" ]
   , typeAttr "typeAttr"       $ div [ text "type test" ]
   ]
