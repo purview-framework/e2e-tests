@@ -7,6 +7,7 @@ import Prelude hiding (div)
 import Network.HTTP.Req
 import Data.Aeson
 import Data.Aeson.Types
+import Data.Text
 import Purview
 import Cases.BasicsAndAttributes (nameAttr)
 
@@ -86,11 +87,9 @@ weatherReducer (LoadWeather lat lon) state = do
   forecastLocation <- fetchForecast (lat, lon)
 
   case forecastLocation of
-
     Just forecastLocation' -> do
       weather <- fetchWeather forecastLocation'
       pure (const $ Loaded weather, [])
-
     Nothing ->
       pure (id, [])
 
@@ -120,7 +119,7 @@ fetchWeather forecastLocation = runReq defaultHttpConfig $ do
 fetchForecast :: (String, String) -> IO (Maybe String)
 fetchForecast (lat, lon) = runReq defaultHttpConfig $ do
   res <- req GET
-    (https "api.weather.gov" /: "points" /: (lat <> "," <> lon))
+    (https "api.weather.gov" /: "points" /: (pack lat <> "," <> pack lon))
     NoReqBody
     jsonResponse
     userAgent

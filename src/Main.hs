@@ -18,6 +18,7 @@ import qualified Cases.BasicsAndAttributes as BasicsAndAttributes
 import qualified Cases.Counter as Counter
 import qualified Cases.TextInput as TextInput
 import qualified Cases.Weather as Weather
+import qualified Cases.BlurAndChange as BlurAndChange
 
 type Path = String
 
@@ -28,6 +29,7 @@ root location = case location of
   "/counter"               -> Counter.render
   "/text-input"            -> TextInput.render
   "/weather"               -> Weather.render
+  "/blur-and-change"       -> BlurAndChange.render
   _ -> div [ text "Unknown test" ]
 
 main :: IO ()
