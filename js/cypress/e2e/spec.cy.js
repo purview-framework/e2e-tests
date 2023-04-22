@@ -77,3 +77,16 @@ describe('blur and change', () => {
 
   })
 })
+
+describe('nested states', () => {
+  it('does not overwrite the child state when updating', () => {
+    cy.visit('http://localhost:8001/nested-states')
+
+    cy.get('#increment-child').click()
+    cy.get('.counter-display-child').contains('1')
+
+    cy.get('#decrement').click()
+    cy.get('.counter-display').contains('-1')
+    cy.get('.counter-display-child').contains('1')
+  })
+})

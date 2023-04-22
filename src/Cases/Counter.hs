@@ -4,6 +4,7 @@ import Prelude hiding (div)
 
 import Purview
 
+
 component count = div
   [ class' "counter-display" $ div [ text (show count) ]
   , div [ onClick "increment" $ id' "increment" $ button [ text "increment" ]

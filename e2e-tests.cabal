@@ -24,6 +24,7 @@ executable e2e-tests
                      , Cases.TextInput
                      , Cases.Weather
                      , Cases.BlurAndChange
+                     , Cases.NestedStates
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
                      , warp

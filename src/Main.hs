@@ -19,6 +19,7 @@ import qualified Cases.Counter as Counter
 import qualified Cases.TextInput as TextInput
 import qualified Cases.Weather as Weather
 import qualified Cases.BlurAndChange as BlurAndChange
+import qualified Cases.NestedStates as NestedStates
 
 type Path = String
 
@@ -30,6 +31,7 @@ root location = case location of
   "/text-input"            -> TextInput.render
   "/weather"               -> Weather.render
   "/blur-and-change"       -> BlurAndChange.render
+  "/nested-states"         -> NestedStates.render
   _ -> div [ text "Unknown test" ]
 
 main :: IO ()
