@@ -46,16 +46,34 @@ describe('a text input', () => {
   })
 })
 
-describe('getting the weather', () => {
-  it('displays the weather for a given lat/lon', () => {
-    cy.visit('http://localhost:8001/weather')
+// describe('getting the weather', () => {
+//   it('displays the weather for a given lat/lon', () => {
+//     cy.visit('http://localhost:8001/weather')
+//
+//     cy.get('#lat-entry').type('11216')
+//     cy.get('#lon-entry').type('11216')
+//     cy.get('#submit').click()
+//   })
+// })
 
-    cy.get('#lat-entry').type('11216')
-    cy.get('#lon-entry').type('11216')
-    cy.get('#submit').click()
+describe('blur and change', () => {
+  it('displays the information after a blur', () => {
+    cy.visit('http://localhost:8001/blur-and-change')
+
+    cy.get('#text-field-blur').type('hello blur')
+    cy.get('#text-field-blur').blur()
+
+    cy.get('#text-display').contains('hello blur')
   })
-})
 
-describe('getting the weather (with effects!)', () => {
+  it('displays the entered information after a change', () => {
+    cy.visit('http://localhost:8001/blur-and-change')
 
+    cy.get('#text-field-change').type('hello change')
+    // this also triggers and onChange event
+    cy.get('#text-field-change').blur()
+
+    cy.get('#text-display').contains('hello change')
+
+  })
 })
