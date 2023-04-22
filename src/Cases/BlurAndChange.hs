@@ -13,7 +13,8 @@ submitButton = typeAttr "submit" $ button [ text "submit" ]
 
 component state = div
   [ div [ id' "text-display" $ div [ text state ] ]
-  , onBlur id $ id' "text-field" textField
+  , onBlur id $ id' "text-field-blur" textField
+  , onChange id $ id' "text-field-change" textField
   ]
 
 countHandler = handler [] "" reducer

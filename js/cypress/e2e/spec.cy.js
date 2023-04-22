@@ -60,13 +60,20 @@ describe('blur and change', () => {
   it('displays the information after a blur', () => {
     cy.visit('http://localhost:8001/blur-and-change')
 
-    cy.get('#text-field').type('hello world', { force: true }).blur()
+    cy.get('#text-field-blur').type('hello blur')
+    cy.get('#text-field-blur').blur()
 
-    cy.get('#text-display').contains('{"text":"hello world"}')
+    cy.get('#text-display').contains('hello blur')
   })
 
   it('displays the entered information after a change', () => {
+    cy.visit('http://localhost:8001/blur-and-change')
+
+    cy.get('#text-field-change').type('hello change')
+    // this also triggers and onChange event
+    cy.get('#text-field-change').blur()
+
+    cy.get('#text-display').contains('hello change')
 
   })
-
 })
