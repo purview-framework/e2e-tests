@@ -76,25 +76,25 @@ data State
   | Loaded Forecast
   deriving (Show, Eq)
 
-weatherReducer :: Actions -> State -> IO (State -> State, [DirectedEvent parentAction Actions])
+weatherReducer :: Actions -> State -> IO (State, [DirectedEvent parentAction Actions])
 weatherReducer (RequestWeather raw) state =
   let
     lat = ""
     lon = ""
   in
-    pure (const $ Loading, [Self $ LoadWeather lat lon])
+    pure (Loading, [Self $ LoadWeather lat lon])
 weatherReducer (LoadWeather lat lon) state = do
   forecastLocation <- fetchForecast (lat, lon)
 
   case forecastLocation of
     Just forecastLocation' -> do
       weather <- fetchWeather forecastLocation'
-      pure (const $ Loaded weather, [])
+      pure (Loaded weather, [])
     Nothing ->
-      pure (id, [])
+      pure (state, [])
 
 weatherHandler :: (State -> Purview Actions IO) -> Purview parentEvent IO
-weatherHandler = effectHandler
+weatherHandler = effectHandler'
   []              -- initial events
   Init            -- initial state
   weatherReducer  -- event reducer

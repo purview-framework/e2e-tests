@@ -16,8 +16,8 @@ component count = div
   , onClick "increment" $ div [ id' "increment" $ button [ text "increment" ] ]
   ]
 
-countHandler = handler [] (0 :: Int) reducer
+countHandler = handler' [] (0 :: Int) reducer
   where
-    reducer "increment" state = (const $ state + 1, [])
+    reducer "increment" state = (state + 1, [])
 
 render = countHandler component
