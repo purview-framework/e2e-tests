@@ -14,7 +14,7 @@ component count = div
 
 countHandler = handler [] (0 :: Int) reducer
   where
-    reducer "increment" state = (const $ state + 1, [])
-    reducer "decrement" state = (const $ state - 1, [])
+    reducer "increment" state = (state + 1, [])
+    reducer "decrement" state = (state - 1, [])
 
 render = countHandler component

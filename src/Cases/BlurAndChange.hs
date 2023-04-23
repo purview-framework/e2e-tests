@@ -19,7 +19,7 @@ component state = div
 
 countHandler = handler [] "" reducer
   where
-    reducer (Just text) state = (const text, [])
-    reducer Nothing     state = (const "no text", [])
+    reducer (Just text) state = (text, [])
+    reducer Nothing     state = ("no text", [])
 
 render = countHandler component
