@@ -90,3 +90,12 @@ describe('nested states', () => {
     cy.get('.counter-display-child').contains('1')
   })
 })
+
+describe('bubbling events', () => {
+  it('increments the counter when the click occurs on a lower item', () => {
+    cy.visit('http://localhost:8001/bubbling-events')
+
+    cy.get('#increment').click()
+    cy.get('.counter-display').contains('1')
+  })
+})

@@ -20,6 +20,7 @@ import qualified Cases.TextInput as TextInput
 import qualified Cases.Weather as Weather
 import qualified Cases.BlurAndChange as BlurAndChange
 import qualified Cases.NestedStates as NestedStates
+import qualified Cases.BubblingEvents as BubblingEvents
 
 type Path = String
 
@@ -32,6 +33,7 @@ root location = case location of
   "/weather"               -> Weather.render
   "/blur-and-change"       -> BlurAndChange.render
   "/nested-states"         -> NestedStates.render
+  "/bubbling-events"       -> BubblingEvents.render
   _ -> div [ text "Unknown test" ]
 
 main :: IO ()
