@@ -12,7 +12,7 @@ component count = div
         ]
   ]
 
-countHandler = handler [] (0 :: Int) reducer
+countHandler = handler' [] (0 :: Int) reducer
   where
     reducer "increment" state = (state + 1, [])
     reducer "decrement" state = (state - 1, [])

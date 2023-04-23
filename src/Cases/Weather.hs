@@ -94,7 +94,7 @@ weatherReducer (LoadWeather lat lon) state = do
       pure (state, [])
 
 weatherHandler :: (State -> Purview Actions IO) -> Purview parentEvent IO
-weatherHandler = effectHandler
+weatherHandler = effectHandler'
   []              -- initial events
   Init            -- initial state
   weatherReducer  -- event reducer

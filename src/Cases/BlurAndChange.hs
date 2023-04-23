@@ -17,7 +17,7 @@ component state = div
   , onChange id $ id' "text-field-change" textField
   ]
 
-countHandler = handler [] "" reducer
+countHandler = handler' [] "" reducer
   where
     reducer (Just text) state = (text, [])
     reducer Nothing     state = ("no text", [])

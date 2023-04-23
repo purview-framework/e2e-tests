@@ -19,7 +19,7 @@ component state = div
     ]
   ]
 
-countHandler = handler [] "" reducer
+countHandler = handler' [] "" reducer
   where
     reducer (Just text) state = (text, [])
     reducer Nothing     state = ("no text", [])
