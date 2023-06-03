@@ -99,3 +99,12 @@ describe('bubbling events', () => {
     cy.get('.counter-display').contains('1')
   })
 })
+
+describe('receiving events', () => {
+  it('starts to increment via an event received from javascript', () => {
+    cy.visit('http://localhost:8001/javascript-event-producer')
+
+    cy.get('.counter-display').contains('0')
+    cy.get('.counter-display').contains('1')
+  })
+})

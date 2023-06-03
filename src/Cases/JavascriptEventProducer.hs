@@ -23,7 +23,7 @@ jsCounter = [r|
   const startCount = () => {
     window.setInterval(() => {
       sendEvent("incrementReceiver", "increment")
-    }, 5000)
+    }, 1000)
   }
   startCount()
 |]
