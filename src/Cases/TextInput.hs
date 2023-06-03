@@ -2,7 +2,7 @@ module Cases.TextInput where
 
 import Prelude hiding (div)
 
-import Purview
+import Purview hiding (render)
 
 typeAttr = Attribute . Generic "type"
 nameAttr = Attribute . Generic "name"
@@ -25,3 +25,5 @@ countHandler = handler' [] "" reducer
     reducer Nothing     state = ("no text", [])
 
 render = countHandler component
+
+getTest = (defaultConfiguration, render)
