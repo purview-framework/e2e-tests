@@ -2,7 +2,6 @@
 module Cases.JavascriptEventProducer where
 
 import           Prelude hiding (div)
-
 import           Text.RawString.QQ (r)
 
 import           Purview hiding (render)
