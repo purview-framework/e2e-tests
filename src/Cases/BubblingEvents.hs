@@ -2,7 +2,7 @@ module Cases.BubblingEvents where
 
 import Prelude hiding (div)
 
-import Purview
+import Purview hiding (render)
 
 
 component count = div
@@ -21,3 +21,5 @@ countHandler = handler' [] (0 :: Int) reducer
     reducer "increment" state = (state + 1, [])
 
 render = countHandler component
+
+getTest = (defaultConfiguration, render)

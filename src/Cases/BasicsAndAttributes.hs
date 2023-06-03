@@ -2,7 +2,7 @@ module Cases.BasicsAndAttributes where
 
 import Prelude hiding (div)
 
-import Purview
+import Purview hiding (render)
 
 nameAttr = Attribute . Generic "name"
 typeAttr = Attribute . Generic "type"
@@ -13,3 +13,5 @@ render = div
   , nameAttr "namedAttr"      $ div [ text "name test" ]
   , typeAttr "typeAttr"       $ div [ text "type test" ]
   ]
+
+getTest = (defaultConfiguration, render)

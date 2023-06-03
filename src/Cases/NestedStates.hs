@@ -2,7 +2,7 @@ module Cases.NestedStates where
 
 import Prelude hiding (div)
 
-import Purview
+import Purview hiding (render)
 
 
 countHandler = handler' [] (0 :: Int) reducer
@@ -27,3 +27,5 @@ component count = div
   ]
 
 render = countHandler component
+
+getTest = (defaultConfiguration, render)

@@ -26,6 +26,7 @@ executable e2e-tests
                      , Cases.BlurAndChange
                      , Cases.NestedStates
                      , Cases.BubblingEvents
+                     , Cases.JavascriptEventProducer
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
                      , warp
@@ -38,6 +39,7 @@ executable e2e-tests
                      , text
                      , req
                      , aeson
+                     , raw-strings-qq
   ghc-options:         -Wall
                        -Wcompat
                        -Widentities

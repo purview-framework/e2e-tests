@@ -21,20 +21,22 @@ import qualified Cases.Weather as Weather
 import qualified Cases.BlurAndChange as BlurAndChange
 import qualified Cases.NestedStates as NestedStates
 import qualified Cases.BubblingEvents as BubblingEvents
+import qualified Cases.JavascriptEventProducer as JavascriptEventProducer
 
 type Path = String
 
-root :: Path -> Purview () IO
+root :: Path -> (Configuration IO, Purview () IO)
 root location = case location of
-  "/renders-a-button"      -> RendersAButton.render
-  "/basics-and-attributes" -> BasicsAndAttributes.render
-  "/counter"               -> Counter.render
-  "/text-input"            -> TextInput.render
-  "/weather"               -> Weather.render
-  "/blur-and-change"       -> BlurAndChange.render
-  "/nested-states"         -> NestedStates.render
-  "/bubbling-events"       -> BubblingEvents.render
-  _ -> div [ text "Unknown test" ]
+  "/renders-a-button"          -> RendersAButton.getTest
+  "/basics-and-attributes"     -> BasicsAndAttributes.getTest
+  "/counter"                   -> Counter.getTest
+  "/text-input"                -> TextInput.getTest
+  "/weather"                   -> Weather.getTest
+  "/blur-and-change"           -> BlurAndChange.getTest
+  "/nested-states"             -> NestedStates.getTest
+  "/bubbling-events"           -> BubblingEvents.getTest
+  "/javascript-event-producer" -> JavascriptEventProducer.getTest
+  _ -> (defaultConfiguration, div [ text "Unknown test" ])
 
 main :: IO ()
 main =
@@ -52,16 +54,18 @@ webSocketHandler component pendingConnection = do
   let
     path = ByteString.unpack
       $ WebSocket.requestPath (WebSocket.pendingRequest pendingConnection)
+    (config, render) = root path
 
   connection <- WebSocket.acceptRequest pendingConnection
-  startWebSocketLoop defaultConfiguration { devMode=True } (root path) connection
+  startWebSocketLoop config { devMode=True } render connection
 
 httpHandler component request respond =
   let
     path = Text.unpack . Text.concat $ Wai.pathInfo request
+    (config, render) = root $ "/" <> path
   in
     respond
       $ Wai.responseBuilder
           status200
           [("Content-Type", "text/html")]
-          (renderFullPage defaultConfiguration (root $ "/" <> path))
+          (renderFullPage config render)

@@ -8,10 +8,11 @@ import Network.HTTP.Req
 import Data.Aeson
 import Data.Aeson.Types
 import Data.Text
-import Purview
-import Cases.BasicsAndAttributes (nameAttr)
+
+import Purview hiding (render, name)
 
 
+nameAttr = Attribute . Generic "name"
 typeAttr = Attribute . Generic "type"
 
 -----------
@@ -138,3 +139,5 @@ fetchForecast (lat, lon) = runReq defaultHttpConfig $ do
 
 render :: Purview parentEvent IO
 render = weatherHandler view
+
+getTest = (defaultConfiguration, render)
