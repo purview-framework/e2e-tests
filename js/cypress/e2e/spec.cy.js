@@ -108,3 +108,15 @@ describe('receiving events', () => {
     cy.get('.counter-display').contains('1')
   })
 })
+
+describe('calling javascript', () => {
+  it('javascript sets the message to the same value as from state', () => {
+    cy.visit('http://localhost:8001/javascript-event-receiver')
+
+    cy.get('.counter-display').contains('0')
+
+    cy.get('#increment').click()
+    cy.get('.counter-display').contains('1')
+    cy.get('#messages').contains('1')
+  })
+})
