@@ -23,6 +23,7 @@ import qualified Cases.NestedStates as NestedStates
 import qualified Cases.BubblingEvents as BubblingEvents
 import qualified Cases.JavascriptEventProducer as JavascriptEventProducer
 import qualified Cases.JavascriptEventReceiver as JavascriptEventReceiver
+import qualified Cases.ClassBasedCSS as ClassBasedCSS
 
 type Path = String
 
@@ -38,6 +39,7 @@ root location = case location of
   "/bubbling-events"           -> BubblingEvents.getTest
   "/javascript-event-producer" -> JavascriptEventProducer.getTest
   "/javascript-event-receiver" -> JavascriptEventReceiver.getTest
+  "/class-based-css"           -> ClassBasedCSS.getTest
   _ -> (defaultConfiguration, div [ text "Unknown test" ])
 
 main :: IO ()

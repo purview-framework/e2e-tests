@@ -120,3 +120,13 @@ describe('calling javascript', () => {
     cy.get('#messages').contains('1')
   })
 })
+
+describe('styling with quasiquotes', () => {
+  it('styles an element', () => {
+    cy.visit('http://localhost:8001/class-based-css')
+
+    cy.get('#text').should('have.css', 'color', 'rgb(255, 0, 0)')
+    cy.get('#increment').click()
+    cy.get('#text').should('have.css', 'color', 'rgb(0, 128, 0)')
+  })
+})
