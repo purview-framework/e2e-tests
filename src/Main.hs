@@ -4,6 +4,8 @@ module Main (main) where
 import Prelude hiding (div)
 
 import Purview
+import Purview.Server
+
 import qualified Network.Wai as Wai
 import qualified Network.Wai.Handler.Warp as Warp
 import qualified Network.WebSockets as WebSocket

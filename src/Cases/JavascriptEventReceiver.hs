@@ -5,6 +5,7 @@ import           Prelude hiding (div)
 import           Text.RawString.QQ (r)
 
 import           Purview hiding (render)
+import           Purview.Server
 
 component count = div
   [ class' "counter-display" $ div [ text (show count) ]
@@ -28,4 +29,4 @@ jsMessageAdder = [r|
   window.addMessage = addMessage;
 |]
 
-getTest = (defaultConfiguration { eventListeners=[jsMessageAdder] }, render)
+getTest = (defaultConfiguration { javascript=jsMessageAdder }, render)

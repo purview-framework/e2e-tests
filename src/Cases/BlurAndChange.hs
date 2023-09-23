@@ -3,6 +3,7 @@ module Cases.BlurAndChange where
 import Prelude hiding (div)
 
 import Purview hiding (render)
+import Purview.Server
 
 typeAttr = Attribute . Generic "type"
 nameAttr = Attribute . Generic "name"

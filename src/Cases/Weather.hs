@@ -10,6 +10,7 @@ import Data.Aeson.Types
 import Data.Text
 
 import Purview hiding (render, name)
+import Purview.Server
 
 
 nameAttr = Attribute . Generic "name"

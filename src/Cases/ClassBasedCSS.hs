@@ -6,6 +6,7 @@ module Cases.ClassBasedCSS where
 import Prelude hiding (div)
 
 import Purview hiding (render)
+import Purview.Server
 
 fancyStyle = [style|
   height: 20px;

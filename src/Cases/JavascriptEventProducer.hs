@@ -5,10 +5,10 @@ import           Prelude hiding (div)
 import           Text.RawString.QQ (r)
 
 import           Purview hiding (render)
+import           Purview.Server
 
 component count = div
-  [ receiver "incrementReceiver" (const "increment")
-  , class' "counter-display" $ div [ text (show count) ]
+  [ class' "counter-display" $ div [ text (show count) ]
   ]
 
 countHandler = handler' [] (0 :: Int) reducer
@@ -16,7 +16,11 @@ countHandler = handler' [] (0 :: Int) reducer
     reducer "increment" state = (state + 1, [])
     reducer "decrement" state = (state - 1, [])
 
-render = countHandler component
+countReceiver = receiver "incrementReceiver" (const "increment")
+
+render = countHandler . countReceiver $ component
+  -- receiver "incrementReceiver" (const "increment")
+  -- component
 
 jsCounter = [r|
   const startCount = () => {
@@ -27,4 +31,4 @@ jsCounter = [r|
   startCount()
 |]
 
-getTest = (defaultConfiguration { eventProducers=[jsCounter] }, render)
+getTest = (defaultConfiguration { javascript=jsCounter }, render)

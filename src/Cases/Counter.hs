@@ -3,6 +3,7 @@ module Cases.Counter where
 import Prelude hiding (div)
 
 import Purview hiding (render)
+import Purview.Server
 
 
 component count = div

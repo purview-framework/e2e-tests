@@ -3,6 +3,7 @@ module Cases.BasicsAndAttributes where
 import Prelude hiding (div)
 
 import Purview hiding (render)
+import Purview.Server
 
 nameAttr = Attribute . Generic "name"
 typeAttr = Attribute . Generic "type"
